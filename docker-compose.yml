@@ -1,0 +1,14 @@
+version: '2'
+
+volumes:
+  influx_data:
+
+services:
+  influx:
+    image: influxdb:1.8-alpine
+    environment:
+      - INFLUXDB_DB=strava
+    ports:
+      - "8086:8086"
+    volumes:
+      - influx_data:/var/lib/influxdb
