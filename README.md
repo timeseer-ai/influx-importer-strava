@@ -1,6 +1,100 @@
 # influx-importer-strava
 
-`influx-importer-strava` imports Strava activity data of one athelete into InfluxDB.
+`influx-importer-strava` imports Strava activity data of one athlete into InfluxDB.
+
+The schema looks like:
+
+```
+> show tag keys
+name: activity
+tagKey
+------
+name
+start_date
+type
+> show field keys
+name: activity
+fieldKey        fieldType
+--------        ---------
+altitude        float
+cadence         integer
+distance        float
+heartrate       integer
+lat             float
+lng             float
+velocity_smooth float
+```
+
+The data looks like (with `lat` and `lng` redacted):
+
+```
+> select * from activity order by time desc limit 3;
+{
+    "results": [
+        {
+            "series": [
+                {
+                    "name": "activity",
+                    "columns": [
+                        "time",
+                        "altitude",
+                        "cadence",
+                        "distance",
+                        "heartrate",
+                        "lat",
+                        "lng",
+                        "name",
+                        "start_date",
+                        "type",
+                        "velocity_smooth"
+                    ],
+                    "values": [
+                        [
+                            1604923841000000000,
+                            29,
+                            82,
+                            9138,
+                            165,
+                            0.000000,
+                            0.000000,
+                            "Sahara",
+                            "2020-11-09T11:23:55Z",
+                            "Run",
+                            3.8
+                        ],
+                        [
+                            1604923840000000000,
+                            29,
+                            82,
+                            9134,
+                            165,
+                            0.000000,
+                            0.000000,
+                            "Sahara",
+                            "2020-11-09T11:23:55Z",
+                            "Run",
+                            3.6
+                        ],
+                        [
+                            1604923839000000000,
+                            28.8,
+                            82,
+                            9130,
+                            165,
+                            0.000000,
+                            0.000000,
+                            "Sahara",
+                            "2020-11-09T11:23:55Z",
+                            "Run",
+                            3.6
+                        ]
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
 
 ## Running Locally
 
